@@ -1,0 +1,20 @@
+# ============================================================
+# NEXUS AI — Variables de Entorno
+# Copia este archivo como .env y llena los valores
+# NUNCA subas .env a git
+# ============================================================
+
+# Base de Datos Neon PostgreSQL
+DATABASE_URL=postgresql://neondb_owner:TU_PASSWORD@ep-winter-hill-aquc081s-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+
+# JWT Secret (cámbialo por algo seguro)
+JWT_SECRET=nexus_super_secret_key_2024_cambiame
+
+# Puerto del servidor
+PORT=3001
+
+# Entorno
+NODE_ENV=development
+
+# Frontend URL (para CORS)
+FRONTEND_URL=http://localhost:5173
