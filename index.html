@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NEXUS AI — SISTEMA PREDICTIVO</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="nexus_frontend.css">
+</head>
+<body>
+<div class="page" id="pgLogin">
+<div>
+  <div class="logo-wrap">
+    <div class="logo-main"><span class="logo-n">NEXUS</span></div>
+    <div class="logo-line"></div>
+    <div class="logo-sub">SISTEMA PREDICTIVO DE VENTAS v2.1</div>
+  </div>
+  <div class="card">
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div id="aLogin" class="alert"></div>
+    <div class="f">
+      <label>Usuario</label>
+      <input id="lUser" type="text" placeholder="operador_nexus" autocomplete="off">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--b)" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <div class="f-line"></div>
+    </div>
+    <div class="f">
+      <label>Contraseña</label>
+      <input id="lPass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--b)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <div class="f-line"></div>
+    </div>
+    <button class="btn btn-b" onclick="doLogin()" id="btnLogin">[ INICIAR SESIÓN ]</button>
+    <div class="sep"><span>nuevo acceso</span></div>
+    <button class="btn btn-g" onclick="goto('pgReg')">[ REGISTRO DE OPERADOR ]</button>
+    <div class="tc2">SISTEMA BIOMÉTRICO HABILITADO // ACCESO RESTRINGIDO</div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ REGISTER ══════════════ -->
+<div class="page out" id="pgReg">
+<div>
+  <div class="logo-wrap">
+    <div class="logo-main" style="font-size:1.8rem;letter-spacing:6px"><span class="logo-n">REGISTRO</span></div>
+    <div class="logo-line"></div>
+    <div class="logo-sub">AUTORIZACIÓN DE NUEVO OPERADOR</div>
+  </div>
+  <div class="card">
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div id="aReg" class="alert"></div>
+    <div class="f">
+      <label>Nombre de Usuario</label>
+      <input id="rUser" type="text" placeholder="operador_01" autocomplete="off">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--b)" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <div class="f-line"></div>
+    </div>
+    <div class="f">
+      <label>Contraseña</label>
+      <input id="rPass" type="password" placeholder="••••••••">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--b)" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <div class="f-line"></div>
+    </div>
+    <div>
+      <label style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:3px;color:var(--b);display:block;margin-bottom:8px">▸ CÓDIGO DE ACCESO ADMINISTRATIVO</label>
+      <div class="code-row">
+        <input class="digi" maxlength="1" id="d1" oninput="nxt(this,'d2')" onkeydown="bk(event,this,null,'d1')">
+        <input class="digi" maxlength="1" id="d2" oninput="nxt(this,'d3')" onkeydown="bk(event,this,'d1','d2')">
+        <input class="digi" maxlength="1" id="d3" oninput="nxt(this,'d4')" onkeydown="bk(event,this,'d2','d3')">
+        <input class="digi" maxlength="1" id="d4" oninput="nxt(this,null)"  onkeydown="bk(event,this,'d3','d4')" onkeypress="if(event.key==='Enter')doReg()">
+      </div>
+    </div>
+    <button class="btn btn-b" onclick="doReg()" id="btnReg">[ VERIFICAR Y REGISTRAR ]</button>
+    <div class="tc"><button class="lnk" onclick="goto('pgLogin')">← Volver al acceso</button></div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ BIOMETRIC ══════════════ -->
+<div class="page out" id="pgBio">
+<div class="bio-wrap">
+  <div class="logo-wrap" style="margin-bottom:1.5rem">
+    <div class="logo-main" style="font-size:1.5rem;letter-spacing:5px"><span class="logo-n">BIOMETRÍA</span></div>
+    <div class="logo-line"></div>
+    <div class="logo-sub" id="bioSubtitle">CAPTURA DE PERFIL FACIAL</div>
+  </div>
+  <div class="card" style="width:500px;text-align:center">
+    <div class="c tl"></div><div class="c tr"></div><div class="c bl"></div><div class="c br"></div>
+    <div id="aBio" class="alert"></div>
+
+    <!-- Scanner visual -->
+    <div class="scan-ring-outer">
+      <div class="ring r1"></div><div class="ring r2"></div>
+      <div class="ring r3"></div><div class="ring r4"></div>
+      <div class="ring r-rot"></div><div class="ring r-rot2"></div>
+      <div class="face-frame" id="faceFrame">
+        <video id="bioVid" autoplay muted playsinline></video>
+        <div class="scan-sweep" id="scanSweep"></div>
+        <!-- Heatmap overlay (simulated) -->
+        <svg class="hmap" id="hmap" viewBox="0 0 160 185">
+          <defs>
+            <radialGradient id="hg1"><stop offset="0%" stop-color="#00ff9d" stop-opacity="0.8"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <radialGradient id="hg2"><stop offset="0%" stop-color="#00e5ff" stop-opacity="0.6"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+          </defs>
+          <circle cx="80" cy="70" r="30" fill="url(#hg1)" opacity="0.5"/>
+          <circle cx="55" cy="85" r="12" fill="url(#hg2)" opacity="0.7"/>
+          <circle cx="105" cy="85" r="12" fill="url(#hg2)" opacity="0.7"/>
+          <circle cx="80" cy="110" r="8" fill="url(#hg1)" opacity="0.6"/>
+          <circle cx="80" cy="130" r="15" fill="url(#hg2)" opacity="0.4"/>
+        </svg>
+        <div class="face-corner-tl"></div><div class="face-corner-tr"></div>
+        <div class="face-corner-bl"></div><div class="face-corner-br"></div>
+      </div>
+    </div>
+
+    <div class="bio-dots">
+      <div class="bdot cur" id="bd1" data-label="DETECCIÓN"></div>
+      <div class="bdot" id="bd2" data-label="PUNTOS"></div>
+      <div class="bdot" id="bd3" data-label="GEOMETRÍA"></div>
+      <div class="bdot" id="bd4" data-label="CODIFICACIÓN"></div>
+      <div class="bdot" id="bd5" data-label="GUARDANDO"></div>
+    </div>
+    <div class="bio-status" id="bioStat">Iniciando módulo de cámara...</div>
+    <div class="bio-pct" id="bioPct">0%</div>
+    <div class="prog-outer"><div class="prog-inner" id="bioProg"></div></div>
+    <button class="btn btn-b" id="btnBio" onclick="startScan()" style="display:none">[ ACTIVAR ESCÁNER FACIAL ]</button>
+    <button class="btn btn-g btn-sm" id="btnSkip" onclick="skipBio()" style="display:none;margin:0.5rem auto">[ CONTINUAR SIN BIOMETRÍA ]</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════ DASHBOARD ══════════════ -->
+<div id="dash">
+  <nav class="dash-nav">
+    <div class="dn-logo">NEXUS AI</div>
+    <div class="dn-user">
+      <div class="dn-av" id="dnAv">
+        <video id="dnVid" autoplay muted playsinline style="display:none"></video>
+        <span id="dnInit">NX</span>
+      </div>
+      <div>
+        <div class="dn-name" id="dnName">OPERADOR</div>
+        <div class="dn-status"><span class="dot-live"></span> AUTENTICADO</div>
+      </div>
+      <button class="btn btn-b btn-sm" onclick="logout()">SALIR</button>
+    </div>
+  </nav>
+  <div class="dash-body">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="si-grp">SISTEMA</div>
+      <div class="si on" data-tab="dashboard" onclick="setTab(this)">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="si-grp">ANÁLISIS</div>
+      <div class="si" data-tab="predicciones" onclick="setTab(this)">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 5-5"/></svg>
+        Predicciones
+      </div>
+      <div class="si" data-tab="ventas" onclick="setTab(this)">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="3" height="14"/><rect x="8" y="3" width="3" height="18"/><rect x="14" y="9" width="3" height="12"/><rect x="20" y="5" width="3" height="16"/></svg>
+        Ventas
+      </div>
+      <div class="si" data-tab="historico" onclick="setTab(this)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Histórico
+      </div>
+      <div class="si-grp">CONFIG</div>
+      <div class="si" data-tab="usuarios" onclick="setTab(this)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Usuarios
+      </div>
+      <div class="si" data-tab="sistema" onclick="setTab(this)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M20 12h-2M6 12H4M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M12 4V2m0 20v-2"/></svg>
+        Sistema
+      </div>
+    </div>
+    <!-- MAIN -->
+    <div class="main" id="mainArea">
+      <div id="tabDashboard" class="tab-page on">
+      <!-- KPIs -->
+      <div class="sec-ttl">MÉTRICAS EN TIEMPO REAL</div>
+      <div class="kpi-row" id="kpiRow">
+        <div class="kpi-c" data-c="b"><div class="kpi-lbl">Ventas del mes</div><div class="kpi-val" id="kv1">—</div><div class="kpi-delta" id="kd1">cargando...</div><svg class="kpi-spark" width="80" height="35" viewBox="0 0 80 35"><polyline points="0,30 15,22 25,25 40,12 55,15 70,6 80,3" fill="none" stroke="rgba(0,229,255,0.4)" stroke-width="1.5"/></svg></div>
+        <div class="kpi-c" data-c="g"><div class="kpi-lbl">Predicción 30d</div><div class="kpi-val" id="kv2">—</div><div class="kpi-delta" id="kd2">cargando...</div><svg class="kpi-spark" width="80" height="35" viewBox="0 0 80 35"><polyline points="0,28 20,22 35,17 50,10 65,6 80,2" fill="none" stroke="rgba(0,255,157,0.4)" stroke-width="1.5" stroke-dasharray="4,2"/></svg></div>
+        <div class="kpi-c" data-c="y"><div class="kpi-lbl">Transacciones hoy</div><div class="kpi-val" id="kv3">—</div><div class="kpi-delta up">↑ EN TIEMPO REAL</div></div>
+        <div class="kpi-c" data-c="m"><div class="kpi-lbl">Precisión del modelo</div><div class="kpi-val" id="kv4">—</div><div class="kpi-delta up">MODELO v2.1</div></div>
+      </div>
+      <!-- CHARTS ROW 1 -->
+      <div class="grid-2">
+        <div class="cc">
+          <div class="cc-hd">
+            <div class="cc-title">Ventas Reales vs Predicción IA</div>
+            <span class="badge-live">● EN VIVO</span>
+          </div>
+          <svg class="ch-svg" height="200" viewBox="0 0 520 200" id="chartMain">
+            <defs>
+              <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(0,229,255,0.35)"/>
+                <stop offset="100%" stop-color="rgba(0,229,255,0)"/>
+              </linearGradient>
+            </defs>
+            <line class="g-line" x1="40" y1="20" x2="520" y2="20"/>
+            <line class="g-line" x1="40" y1="55" x2="520" y2="55"/>
+            <line class="g-line" x1="40" y1="90" x2="520" y2="90"/>
+            <line class="g-line" x1="40" y1="125" x2="520" y2="125"/>
+            <line class="g-line" x1="40" y1="160" x2="520" y2="160"/>
+            <text class="al" x="2" y="23">$140k</text>
+            <text class="al" x="2" y="58">$105k</text>
+            <text class="al" x="2" y="93">$70k</text>
+            <text class="al" x="2" y="128">$35k</text>
+            <text class="al" x="2" y="163">$0</text>
+            <text class="al" x="65" y="185">Ene</text><text class="al" x="115" y="185">Feb</text>
+            <text class="al" x="165" y="185">Mar</text><text class="al" x="215" y="185">Abr</text>
+            <text class="al" x="265" y="185">May</text><text class="al" x="315" y="185">Jun</text>
+            <text class="al" x="365" y="185">Jul</text><text class="al" x="415" y="185">Ago</text>
+            <text class="al" x="465" y="185">Sep*</text>
+            <path class="carea on" id="chartArea" d=""/>
+            <polyline class="cline" id="chartLine" points=""/>
+            <polyline class="cline-p" id="chartLinePred" points=""/>
+            <g id="chartDots"></g>
+            <line id="cursor" x1="0" y1="20" x2="0" y2="165" stroke="rgba(0,229,255,0.25)" stroke-width="1" stroke-dasharray="4,4" opacity="0"/>
+            <!-- Legend -->
+            <rect x="300" y="5" width="14" height="2" fill="rgba(0,229,255,0.8)"/>
+            <text class="al" x="318" y="9" style="fill:var(--b)">Real</text>
+            <rect x="365" y="4" width="14" height="2" fill="var(--g)" style="stroke-dasharray:4,2"/>
+            <text class="al" x="383" y="9" style="fill:var(--g)">IA pred.</text>
+          </svg>
+        </div>
+        <div class="cc">
+          <div class="cc-hd"><div class="cc-title">Rendimiento</div><span class="badge-ai">IA MODEL</span></div>
+          <div class="gauge-area">
+            <svg width="180" height="100" viewBox="0 0 180 100">
+              <defs>
+                <linearGradient id="gg2" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#0099ff"/><stop offset="50%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#00ff9d"/>
+                </linearGradient>
+              </defs>
+              <path d="M20,88 A70,70 0 0,1 160,88" fill="none" stroke="rgba(0,229,255,0.08)" stroke-width="14" stroke-linecap="round"/>
+              <path id="gaugePath" d="M20,88 A70,70 0 0,1 160,88" fill="none" stroke="url(#gg2)" stroke-width="14" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="55"/>
+              <circle cx="90" cy="88" r="6" fill="rgba(0,229,255,0.3)" stroke="var(--b)" stroke-width="1"/>
+              <line id="gaugeNeedle" x1="90" y1="88" x2="160" y2="88" stroke="var(--g)" stroke-width="2.5" stroke-linecap="round" transform="rotate(-20,90,88)"/>
+            </svg>
+            <div class="gauge-val" id="gaugeVal">87.3%</div>
+            <div class="gauge-sub">EFICIENCIA DEL SISTEMA</div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="cc chart-3d">
+          <div class="cc-hd"><div class="cc-title">3D Ventas</div></div>
+          <div class="chart-3d-face" id="chart3dSales">
+            <div class="bar3d"><span style="height:60%"></span><strong>Web</strong></div>
+            <div class="bar3d"><span style="height:45%"></span><strong>App</strong></div>
+            <div class="bar3d"><span style="height:35%"></span><strong>B2B</strong></div>
+          </div>
+          <div class="chart-3d-label">Métricas 3D del canal de ventas</div>
+        </div>
+        <div class="cc chart-3d">
+          <div class="cc-hd"><div class="cc-title">3D Canales</div></div>
+          <div class="chart-3d-face" id="chart3dCanales">
+            <div class="bar3d"><span style="height:55%"></span><strong>Nivel A</strong></div>
+            <div class="bar3d"><span style="height:72%"></span><strong>Nivel B</strong></div>
+            <div class="bar3d"><span style="height:48%"></span><strong>Nivel C</strong></div>
+          </div>
+          <div class="chart-3d-label">Pronóstico futurista en tres dimensiones</div>
+        </div>
+        <div class="cc chart-3d">
+          <div class="cc-hd"><div class="cc-title">3D Impacto</div></div>
+          <div class="chart-3d-face" id="chart3dImpact">
+            <div class="bar3d"><span style="height:68%"></span><strong>AI</strong></div>
+            <div class="bar3d"><span style="height:52%"></span><strong>UX</strong></div>
+            <div class="bar3d"><span style="height:79%"></span><strong>Data</strong></div>
+          </div>
+          <div class="chart-3d-label">Panel futurista de rendimiento 3D</div>
+        </div>
+      </div>
+      <!-- CHARTS ROW 2 -->
+      <div class="grid-3">
+        <div class="cc" style="grid-column:span 2">
+          <div class="cc-hd"><div class="cc-title">Predicciones por Producto</div><span class="badge-ai">30 DÍAS</span></div>
+          <table class="nt" id="predTbl">
+            <thead><tr>
+              <th>Producto</th><th>Actual</th><th>Predicción</th><th>Var.</th><th>Confianza</th>
+            </tr></thead>
+            <tbody id="predBody">
+              <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1rem">
+                <div class="spinner"></div> Cargando datos...
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cc">
+          <div class="cc-hd"><div class="cc-title">Ventas por Canal</div></div>
+          <div class="barchart" id="barArea"></div>
+        </div>
+      </div>
+    </div>
+    <div id="tabPredicciones" class="tab-page">
+      <div class="sec-ttl">PREDICCIONES AVANZADAS</div>
+      <div class="grid-3">
+        <div class="cc" style="grid-column:span 2">
+          <div class="cc-hd"><div class="cc-title">Predicciones por Producto</div><span class="badge-ai">IA 30 DÍAS</span></div>
+          <table class="nt" id="predTbl2">
+            <thead><tr><th>Producto</th><th>Actual</th><th>Predicción</th><th>Var.</th><th>Confianza</th></tr></thead>
+            <tbody id="predBody2">
+              <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1rem">
+                <div class="spinner"></div> Cargando datos...
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cc">
+          <div class="cc-hd"><div class="cc-title">Ventas por Canal</div></div>
+          <div class="barchart" id="barArea2"></div>
+        </div>
+      </div>
+    </div>
+    <div id="tabVentas" class="tab-page">
+      <div class="sec-ttl">REGISTRO DE VENTAS</div>
+      <div class="grid-2">
+        <div class="cc">
+          <div class="cc-hd"><div class="cc-title">Nueva Venta</div><span class="badge-live">FÁCIL</span></div>
+          <div id="aSales" class="alert"></div>
+          <div class="f"><label>Producto</label><input id="saleProd" type="text" placeholder="Electrónica"></div>
+          <div class="f"><label>Canal</label><input id="saleCanal" type="text" placeholder="Web"></div>
+          <div class="f"><label>Monto</label><input id="saleMonto" type="number" placeholder="12345"></div>
+          <div class="f"><label>Fecha</label><input id="saleFecha" type="date"></div>
+          <button class="btn btn-g" id="btnSale" onclick="submitSale()">[ GUARDAR VENTA ]</button>
+          <div class="tc2">Agrega ventas nuevas al sistema y actualiza las métricas en tiempo real.</div>
+        </div>
+        <div class="cc">
+          <div class="cc-hd"><div class="cc-title">Últimas Ventas</div></div>
+          <table class="nt" id="salesTbl">
+            <thead><tr><th>Producto</th><th>Canal</th><th>Monto</th><th>Fecha</th><th>Acciones</th></tr></thead>
+            <tbody id="salesBody">
+              <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1rem"><div class="spinner"></div> Cargando ventas...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="tabHistorico" class="tab-page">
+      <div class="sec-ttl">HISTÓRICO DE VENTAS</div>
+      <div class="cc">
+        <div class="cc-hd"><div class="cc-title">Resumen de Últimos Movimientos</div></div>
+        <table class="nt" id="historyTbl">
+          <thead><tr><th>Fecha</th><th>Producto</th><th>Canal</th><th>Monto</th><th>Acciones</th></tr></thead>
+          <tbody id="historyBody">
+            <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1rem"><div class="spinner"></div> Cargando histórico...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="tabUsuarios" class="tab-page">
+      <div class="sec-ttl">USUARIOS DEL SISTEMA</div>
+      <div class="cc">
+        <div class="cc-hd"><div class="cc-title">Operadores registrados</div><button class="btn btn-sm btn-g" onclick="loadUsers()">Actualizar</button></div>
+        <div id="aUsers" class="alert"></div>
+        <table class="nt">
+          <thead><tr><th>ID</th><th>Usuario</th><th>Creación</th><th>Último login</th><th>Acciones</th></tr></thead>
+          <tbody id="usersBody">
+            <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1rem"><div class="spinner"></div> Cargando usuarios...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="tabSistema" class="tab-page">
+      <div class="sec-ttl">ESTADO DEL SISTEMA</div>
+      <div class="grid-2">
+        <div class="cc">
+          <div class="cc-hd"><div class="cc-title">Conexión</div></div>
+          <div class="f"><label>Estado API</label><div id="sysStatus" class="tc2">Esperando...</div></div>
+          <div class="f"><label>Ambiente</label><div id="sysEnv" class="tc2">---</div></div>
+          <div class="f"><label>Usuario actual</label><div id="sysUser" class="tc2">---</div></div>
+        </div>
+        <div class="cc">
+          <div class="cc-hd"><div class="cc-title">Tiempo y versión</div></div>
+          <div class="f"><label>Servidor</label><div id="sysServer" class="tc2">---</div></div>
+          <div class="f"><label>Base de datos</label><div id="sysDb" class="tc2">---</div></div>
+          <button class="btn btn-b" onclick="loadSystem()">[ REFRESCAR ESTADO ]</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="nexus_frontend.js"></script>
+</body>
+</html>
